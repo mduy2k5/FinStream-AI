@@ -1,0 +1,101 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# 1. DOCKER & KAFKA & POSTGRES LOCAL VOLUMES (CRITICAL)
+# ──────────────────────────────────────────────────────────────────────────────
+# Bỏ qua toàn bộ dữ liệu nhị phân cục bộ của Postgres, Kafka, Zookeeper lưu ở Host
+/data/
+/data/*
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 2. PYTHON TEMPORARY & VIRTUAL ENVIRONMENT FILES
+# ──────────────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 3. APACHE SPARK TEMPORARY FILES & CHECKPOINTS
+# ──────────────────────────────────────────────────────────────────────────────
+# Thư mục checkpoint lưu vết dòng dữ liệu Spark Streaming
+/tmp/
+/tmp/spark_checkpoint/
+.ivy2/
+
+# Spark runtime logs
+*.out
+*.log
+spark-warehouse/
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 4. APACHE AIRFLOW TEMPORARY FILES & DB
+# ──────────────────────────────────────────────────────────────────────────────
+# Bỏ qua CSDL SQLite cục bộ và logs chạy Airflow
+airflow/airflow.db
+airflow/airflow-webserver.pid
+airflow/logs/
+logs/
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 5. CREDENTIALS & SENSITIVE ENVIRONMENT VARIABLES
+# ──────────────────────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# Cấu hình riêng tư (danh sách cổ phiếu, broker,...) — dùng config.example.py làm template
+config.py
+producer/config.py
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 6. IDEs & OS TEMPORARY FILES
+# ──────────────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS temporary files
+.DS_Store
+Thumbs.db
+
+# ──────────────────────────────────────────────────────────────────────────────
+# 7. BÁO CÁO PDF & TÀI LIỆU KẾ HOẠCH
+# ──────────────────────────────────────────────────────────────────────────────
+# Bỏ qua các file PDF báo cáo, thuyết trình
+*.pdf
+
+# Bỏ qua các thư mục / file kế hoạch dự án
+/Plan/
+/plan/
+/plans/
+*.plan
+*_plan.*
+plan_*.*
+
+# Bỏ qua các file báo cáo (report)
+/reports/
+/report/
+*_report.*
+*report_*.*
+final_report.*
+report.*
+
+# Bỏ qua các file tài liệu nội bộ (Word, PowerPoint, Excel)
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.xlsx
+*.xls

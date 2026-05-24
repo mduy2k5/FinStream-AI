@@ -1,0 +1,18 @@
+# Dockerfile cho Spark tùy chỉnh với PyTorch
+# Base: apache/spark:latest – có sẵn Spark + Python 3.10 + Java
+# Chỉ cần cài thêm PyTorch CPU-only
+
+FROM apache/spark:latest
+
+USER root
+
+# Cài pip (nếu chưa có) và PyTorch CPU-only
+RUN pip install --no-cache-dir \
+        torch==2.1.2 \
+        --index-url https://download.pytorch.org/whl/cpu
+
+# Copy ứng dụng vào /app
+COPY spark_app/ /app/
+WORKDIR /app
+
+EXPOSE 8080 7077 8081

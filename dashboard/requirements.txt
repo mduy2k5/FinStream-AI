@@ -1,0 +1,6 @@
+streamlit>=1.25.0
+pandas>=1.5.0
+psycopg2-binary>=2.9.0
+plotly>=5.15.0
+numpy>=1.22.0
+scikit-learn>=1.0.0

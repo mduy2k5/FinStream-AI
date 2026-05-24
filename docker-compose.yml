@@ -1,0 +1,129 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    volumes:
+      - ./data/zookeeper:/opt/zookeeper-3.4.13/data
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9094"
+    environment:
+      # Dùng đúng biến env của wurstmeister/kafka
+      KAFKA_BROKER_ID: 1                         # cố định Broker ID, tránh conflict khi restart
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: "stock_prices_stream:1:1"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_LOG_RETENTION_HOURS: 24
+    volumes:
+      - ./data/kafka:/kafka
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  spark-master:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    image: custom-spark:latest
+    container_name: spark-master
+    command: >
+      bash -c "/opt/spark/sbin/start-master.sh &&
+               tail -f /opt/spark/logs/*.out"
+    ports:
+      - "8080:8080"   # Spark Master Web UI
+      - "7077:7077"   # Spark Master Port
+    environment:
+      - SPARK_HOME=/opt/spark
+      - KAFKA_BROKER=kafka:9092
+      - KAFKA_TOPIC=stock_prices_stream
+      - POSTGRES_URL=jdbc:postgresql://postgres:5432/stock_db
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASS=mypassword
+      - MODEL_PATH=/app/dls_ts_net.pt
+    volumes:
+      - ./spark_app:/app
+
+  spark-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    image: custom-spark:latest
+    container_name: spark-worker
+    depends_on:
+      - spark-master
+    command: >
+      bash -c "sleep 5 &&
+               /opt/spark/sbin/start-worker.sh spark://spark-master:7077 &&
+               tail -f /opt/spark/logs/*.out"
+    ports:
+      - "8081:8081"   # Spark Worker Web UI
+    environment:
+      - SPARK_HOME=/opt/spark
+      - SPARK_WORKER_MEMORY=2g
+      - SPARK_WORKER_CORES=2
+    volumes:
+      - ./spark_app:/app
+
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=stock_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+      - ./db_init:/docker-entrypoint-initdb.d
+
+  airflow:
+    image: apache/airflow:2.7.2
+    container_name: airflow
+    depends_on:
+      - kafka
+      - postgres
+    ports:
+      - "8085:8080"   # Ánh xạ Web UI của Airflow sang cổng 8085 để tránh trùng cổng 8080 của Spark
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////opt/airflow/airflow.db
+      - _PIP_ADDITIONAL_REQUIREMENTS=yfinance kafka-python multitasking==0.0.9
+      - KAFKA_BROKER=kafka:9092
+      - _AIRFLOW_WWW_USER_USERNAME=admin
+      - _AIRFLOW_WWW_USER_PASSWORD=admin
+    command: standalone
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./producer:/opt/airflow/producer
+
+  dashboard:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile.dashboard
+    image: stock-dashboard:latest
+    container_name: dashboard
+    depends_on:
+      - postgres
+    ports:
+      - "8501:8501"
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=stock_db
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASS=mypassword
+    volumes:
+      - ./dashboard:/app
+
