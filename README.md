@@ -1,4 +1,4 @@
-# 📈 FinStream-AI: Real-Time Deep Stock Forecasting & Intelligent Strategy Ecosystem
+# FinStream-AI: Real-Time Deep Stock Forecasting & Intelligent Strategy Ecosystem
 
 [![Docker Compose](https://img.shields.io/badge/Docker_Compose-v3.8-blue?logo=docker&logoColor=white)](https://www.docker.com/)
 [![Apache Spark](https://img.shields.io/badge/Apache_Spark-v3.3.0-orange?logo=apachespark&logoColor=white)](https://spark.apache.org/)
@@ -11,7 +11,7 @@
 **FinStream-AI** is a real-time Big Data processing system that combines deep learning time-series forecasting with a professional automation orchestrator. The system automatically collects market price data via API, streams it through a fault-tolerant message queue, performs next-day closing price inference via a PyTorch model running on distributed Spark, stores results in a database, and delivers a premium interactive Dark Mode Web UI to support investors in building trading strategies.
 
 
-## 🎨 System Architecture
+## System Architecture
 
 ```mermaid
 flowchart TD
@@ -37,16 +37,16 @@ flowchart TD
 ```
 
 
-## 🔥 Key Features
+## Key Features
 
-1. **🔮 Automated AI Signals**: Automatically collects stock price data via Yahoo Finance API and generates smart trading signals — `BUY (Long)` / `CASH (Hold)`.
-2. **⚡ Large-Scale Stream Processing**: Integrates Spark Structured Streaming with Kafka Broker; applies Min-Max normalization over a 20-session sliding window before inference.
-3. **🎯 High-Accuracy Deep Learning Model**: Uses a deep learning model via PyTorch to forecast the next-day closing price with high accuracy (**average portfolio MAPE < 5%**, **R² > 0.98**).
-4. **📊 Interactive Strategy Simulation**: Allows users to select a custom historical time range for backtesting, and automatically compares cumulative returns and Max Drawdown across strategies: *Buy & Hold*, *Long-Only AI*, and *Long-Short AI*.
-5. **🐳 Fully Containerized via Docker**: The entire system is containerized end-to-end via Docker Compose for rapid deployment on any environment.
+1. ** Automated AI Signals**: Automatically collects stock price data via Yahoo Finance API and generates smart trading signals — `BUY (Long)` / `CASH (Hold)`.
+2. ** Large-Scale Stream Processing**: Integrates Spark Structured Streaming with Kafka Broker; applies Min-Max normalization over a 20-session sliding window before inference.
+3. ** High-Accuracy Deep Learning Model**: Uses a deep learning model via PyTorch to forecast the next-day closing price with high accuracy (**average portfolio MAPE < 5%**, **R² > 0.98**).
+4. ** Interactive Strategy Simulation**: Allows users to select a custom historical time range for backtesting, and automatically compares cumulative returns and Max Drawdown across strategies: *Buy & Hold*, *Long-Only AI*, and *Long-Short AI*.
+5. ** Fully Containerized via Docker**: The entire system is containerized end-to-end via Docker Compose for rapid deployment on any environment.
 
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 | :--- | :--- |
@@ -58,7 +58,7 @@ flowchart TD
 | **Storage** | PostgreSQL 14 |
 | **Visualization UI** | Streamlit 1.57.0 (Dark Mode) |
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 FinStream-AI/
@@ -83,7 +83,7 @@ FinStream-AI/
 └── db_init/                        # SQL scripts for database schema initialization
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 * **Docker** and **Docker Compose** installed on your machine.
@@ -114,7 +114,7 @@ FinStream-AI/
    ```
 
 
-## 🔌 Default Service Ports
+## Default Service Ports
 
 Once the system is up, access the following endpoints:
 
@@ -126,7 +126,7 @@ Once the system is up, access the following endpoints:
 | **PostgreSQL DB** | `localhost:5432` | `myuser` / `mypassword` | Direct access to the `stock_db` database |
 
 
-## 📈 Simulation Results & Risk Assessment Summary
+## Simulation Results & Risk Assessment Summary
 
 * **Outstanding accuracy**: The R² coefficient for leading stocks like **FPT** reaches **0.9925**, demonstrating the AI algorithm's exceptional ability to capture market trends.
 * **Downside risk mitigation (Max Drawdown)**: For **SSI**, the traditional Buy & Hold strategy suffered a loss of **-12.96%** (asset drawdown of **-88.33%**). In contrast, the AI **Long-Only** strategy turned that loss into a **6,052.88%** gain while reducing Max Drawdown to just **-46.46%** by staying in cash throughout the downtrend.
