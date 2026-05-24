@@ -10,7 +10,6 @@
 
 **FinStream-AI** is a real-time Big Data processing system that combines deep learning time-series forecasting with a professional automation orchestrator. The system automatically collects market price data via API, streams it through a fault-tolerant message queue, performs next-day closing price inference via a PyTorch model running on distributed Spark, stores results in a database, and delivers a premium interactive Dark Mode Web UI to support investors in building trading strategies.
 
----
 
 ## 🎨 System Architecture
 
@@ -37,7 +36,6 @@ flowchart TD
     end
 ```
 
----
 
 ## 🔥 Key Features
 
@@ -47,7 +45,6 @@ flowchart TD
 4. **📊 Interactive Strategy Simulation**: Allows users to select a custom historical time range for backtesting, and automatically compares cumulative returns and Max Drawdown across strategies: *Buy & Hold*, *Long-Only AI*, and *Long-Short AI*.
 5. **🐳 Fully Containerized via Docker**: The entire system is containerized end-to-end via Docker Compose for rapid deployment on any environment.
 
----
 
 ## 🛠️ Tech Stack
 
@@ -60,8 +57,6 @@ flowchart TD
 | **Deep Learning Core** | PyTorch & PySpark UDF |
 | **Storage** | PostgreSQL 14 |
 | **Visualization UI** | Streamlit 1.57.0 (Dark Mode) |
-
----
 
 ## 📂 Project Structure
 
@@ -87,8 +82,6 @@ FinStream-AI/
 │   └── Dockerfile.dashboard
 └── db_init/                        # SQL scripts for database schema initialization
 ```
-
----
 
 ## 🚀 Quick Start
 
@@ -120,7 +113,6 @@ FinStream-AI/
    docker ps
    ```
 
----
 
 ## 🔌 Default Service Ports
 
@@ -133,7 +125,6 @@ Once the system is up, access the following endpoints:
 | **Spark Master UI** | **`http://localhost:8080`** | *Not required* | Monitor Spark Streaming processing performance |
 | **PostgreSQL DB** | `localhost:5432` | `myuser` / `mypassword` | Direct access to the `stock_db` database |
 
----
 
 ## 📈 Simulation Results & Risk Assessment Summary
 
