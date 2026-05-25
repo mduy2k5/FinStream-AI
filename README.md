@@ -39,11 +39,11 @@ flowchart TD
 
 ## Key Features
 
-1. ** Automated AI Signals**: Automatically collects stock price data via Yahoo Finance API and generates smart trading signals — `BUY (Long)` / `CASH (Hold)`.
-2. ** Large-Scale Stream Processing**: Integrates Spark Structured Streaming with Kafka Broker; applies Min-Max normalization over a 20-session sliding window before inference.
-3. ** High-Accuracy Deep Learning Model**: Uses a deep learning model via PyTorch to forecast the next-day closing price with high accuracy (**average portfolio MAPE < 5%**, **R² > 0.98**).
-4. ** Interactive Strategy Simulation**: Allows users to select a custom historical time range for backtesting, and automatically compares cumulative returns and Max Drawdown across strategies: *Buy & Hold*, *Long-Only AI*, and *Long-Short AI*.
-5. ** Fully Containerized via Docker**: The entire system is containerized end-to-end via Docker Compose for rapid deployment on any environment.
+1. **Automated AI Signals**: Automatically collects stock price data via Yahoo Finance API and generates smart trading signals — `BUY (Long)` / `CASH (Hold)`.
+2. **Large-Scale Stream Processing**: Integrates Spark Structured Streaming with Kafka Broker; applies Min-Max normalization over a 20-session sliding window before inference.
+3. **High-Accuracy Deep Learning Model**: Uses a deep learning model via PyTorch to forecast the next-day closing price with high accuracy (**average portfolio MAPE < 5%**, **R² > 0.98**).
+4. **Interactive Strategy Simulation**: Allows users to select a custom historical time range for backtesting, and automatically compares cumulative returns and Max Drawdown across strategies: *Buy & Hold*, *Long-Only AI*, and *Long-Short AI*.
+5. **Fully Containerized via Docker**: The entire system is containerized end-to-end via Docker Compose for rapid deployment on any environment.
 
 
 ## Tech Stack
